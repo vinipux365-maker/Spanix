@@ -1,0 +1,6 @@
+# Никогда не заливать на GitHub: токен бота, платежи, локальные данные
+config.json
+payments.json
+*.env
+.env*
+__pycache__/

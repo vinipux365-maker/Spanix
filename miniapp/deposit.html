@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Пополнение TON</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+<style>
+  :root {
+    --bg: var(--tg-theme-bg-color, #0f0f10);
+    --card: var(--tg-theme-secondary-bg-color, #1c1c1e);
+    --text: var(--tg-theme-text-color, #ffffff);
+    --hint: var(--tg-theme-hint-color, #8e8e93);
+    --accent: #0098ea;
+    --ok: #34c759;
+    --err: #ff453a;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    margin: 0; min-height: 100vh; background: var(--bg); color: var(--text);
+    font: 16px/1.4 -apple-system, BlinkMacSystemFont, "SF Pro Text", Roboto, sans-serif;
+  }
+  .wrap { max-width: 440px; margin: 0 auto; padding: 20px 16px 32px; }
+  h1 { font-size: 24px; margin: 4px 0 4px; }
+  .sub { color: var(--hint); margin: 0 0 20px; font-size: 14px; }
+  .card { background: var(--card); border-radius: 16px; padding: 16px; margin-bottom: 14px; }
+  .label { color: var(--hint); font-size: 13px; margin-bottom: 10px; }
+  .top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  #ton-connect { flex-shrink: 0; }
+  .amount { display: flex; align-items: center; gap: 10px; }
+  .amount input {
+    flex: 1; min-width: 0; background: transparent; border: none; outline: none;
+    color: var(--text); font-size: 32px; font-weight: 600;
+  }
+  .amount span { color: var(--hint); font-weight: 600; font-size: 20px; }
+  .chips { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+  .chip {
+    flex: 1; min-width: 60px; padding: 9px 0; border-radius: 10px; border: none;
+    background: rgba(0,152,234,.15); color: var(--accent); font-weight: 600; font-size: 15px;
+  }
+  .pay {
+    width: 100%; padding: 15px; border: none; border-radius: 14px; margin-top: 6px;
+    background: var(--accent); color: #fff; font-size: 17px; font-weight: 600;
+  }
+  .pay:disabled { opacity: .45; }
+  #status { min-height: 22px; margin-top: 14px; text-align: center; font-size: 14px; color: var(--hint); }
+  #status.ok { color: var(--ok); } #status.err { color: var(--err); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <h1>Пополнение</h1>
+    <div id="ton-connect"></div>
+  </div>
+  <p class="sub">Выбери сумму и нажми «Пополнить» — откроется выбор кошелька.</p>
+
+  <div class="card">
+    <div class="label">Сумма</div>
+    <div class="amount">
+      <input id="amount" inputmode="decimal" placeholder="0" value="1">
+      <span>TON</span>
+    </div>
+    <div class="chips">
+      <button class="chip" data-v="1">1</button>
+      <button class="chip" data-v="5">5</button>
+      <button class="chip" data-v="10">10</button>
+      <button class="chip" data-v="25">25</button>
+    </div>
+  </div>
+
+  <button id="pay" class="pay">Пополнить</button>
+  <div id="status"></div>
+</div>
+
+<script>
+/* ===================== НАСТРОЙКИ ===================== */
+const OWNER_WALLET = "UQ_ВСТАВЬ_СВОЙ_АДРЕС";                          // твой TON-кошелёк, куда идут деньги
+const MINI_APP_LINK = "https://t.me/ИМЯ_БОТА";   // куда кошелёк вернёт после оплаты
+const MIN_TON = 0.5;
+// манифест лежит рядом с этой страницей — работает и на GitHub, и на сервере
+const MANIFEST_URL = new URL("tonconnect-manifest.json", location.href).href;
+/* ===================================================== */
+
+const tg = window.Telegram?.WebApp;
+tg?.ready(); tg?.expand();
+const userId = tg?.initDataUnsafe?.user?.id;
+
+const $amount = document.getElementById("amount");
+const $pay = document.getElementById("pay");
+const $status = document.getElementById("status");
+const setStatus = (text, cls = "") => { $status.textContent = text; $status.className = cls; };
+
+const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+  manifestUrl: MANIFEST_URL,
+  buttonRootId: "ton-connect",
+  language: "ru",
+  uiPreferences: { theme: TON_CONNECT_UI.THEME.DARK },
+  actionsConfiguration: { twaReturnUrl: MINI_APP_LINK }
+});
+
+// Сумма "1.5" -> нанотоны строкой (без ошибок округления)
+function toNano(str) {
+  str = String(str).replace(",", ".").trim();
+  if (!/^\d+(\.\d{1,9})?$/.test(str)) return null;
+  const [i, f = ""] = str.split(".");
+  return (BigInt(i) * 1000000000n + BigInt((f + "000000000").slice(0, 9))).toString();
+}
+
+// Комментарий к переводу ("dep:<telegram id>") в формате BOC — по нему бот поймёт, кому зачислить
+function commentPayload(text) {
+  const bytes = new TextEncoder().encode(text);
+  if (bytes.length > 123) throw new Error("Комментарий слишком длинный");
+  const data = new Uint8Array(4 + bytes.length);   // первые 4 байта = 0 (текстовый комментарий)
+  data.set(bytes, 4);
+  const cell = new Uint8Array(2 + data.length);
+  cell[0] = 0;                 // ссылок нет
+  cell[1] = data.length * 2;   // длина данных (целые байты)
+  cell.set(data, 2);
+  const head = [0xb5, 0xee, 0x9c, 0x72, 0x01, 0x01, 0x01, 0x01, 0x00, cell.length, 0x00];
+  const boc = new Uint8Array(head.length + cell.length);
+  boc.set(head); boc.set(cell, head.length);
+  return btoa(String.fromCharCode(...boc));
+}
+
+let pendingPay = false;
+
+async function pay() {
+  if (OWNER_WALLET.includes("ВСТАВЬ")) return setStatus("Не указан кошелёк для приёма оплаты (OWNER_WALLET в deposit.html)", "err");
+  const amountStr = $amount.value;
+  const nano = toNano(amountStr);
+  if (!nano || Number(amountStr.replace(",", ".")) < MIN_TON)
+    return setStatus(`Минимум ${MIN_TON} TON`, "err");
+
+  if (!tonConnectUI.connected) {        // не подключён -> открываем окно со списком кошельков
+    pendingPay = true;
+    return tonConnectUI.openModal();
+  }
+
+  $pay.disabled = true;
+  setStatus("Подтверди перевод в кошельке…");
+  try {
+    const message = { address: OWNER_WALLET, amount: nano };
+    if (userId) message.payload = commentPayload("dep:" + userId);  // в комментарии будет Telegram ID плательщика
+    await tonConnectUI.sendTransaction({
+      validUntil: Math.floor(Date.now() / 1000) + 300,
+      messages: [message]
+    });
+    setStatus("Платёж отправлен! Спасибо 💎", "ok");
+    tg?.HapticFeedback?.notificationOccurred("success");
+  } catch (e) {
+    setStatus("Платёж отменён", "err");
+  } finally {
+    $pay.disabled = false;
+  }
+}
+
+// Если нажали "Пополнить" без кошелька — после подключения сразу продолжаем оплату
+tonConnectUI.onStatusChange(wallet => {
+  if (wallet && pendingPay) { pendingPay = false; pay(); }
+});
+
+document.querySelectorAll(".chip").forEach(b => b.onclick = () => { $amount.value = b.dataset.v; setStatus(""); });
+$pay.onclick = pay;
+</script>
+</body>
+</html>

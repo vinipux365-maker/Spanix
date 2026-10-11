@@ -1,0 +1,338 @@
+{
+  "v": 1,
+  "app": {
+    "name": "SPANIX",
+    "giftAccount": "@твой_аккаунт",
+    "startBalance": 0,
+    "demoTopup": false,
+    "maint": false,
+    "maintText": "Идут технические работы. Скоро вернёмся!"
+  },
+  "stars": {
+    "perTon": 150,
+    "packs": [
+      50,
+      100,
+      250,
+      500,
+      1000,
+      2500
+    ]
+  },
+  "games": {
+    "rocket": true,
+    "pvp": true,
+    "upgrade": true,
+    "mines": true,
+    "plinko": true,
+    "dice": true,
+    "craft": true
+  },
+  "edge": {
+    "dice": 0.02,
+    "mines": 0.03,
+    "rocket": 0.03,
+    "upgrade": 0.05,
+    "upMax": 0.9,
+    "craftUp": 0.3,
+    "pvp": 0.05
+  },
+  "plinko": {
+    "low": [
+      10,
+      3,
+      1.6,
+      1.4,
+      1.1,
+      1,
+      0.5,
+      1,
+      1.1,
+      1.4,
+      1.6,
+      3,
+      10
+    ],
+    "mid": [
+      33,
+      11,
+      4,
+      2,
+      1.1,
+      0.6,
+      0.3,
+      0.6,
+      1.1,
+      2,
+      4,
+      11,
+      33
+    ],
+    "high": [
+      170,
+      24,
+      8.1,
+      2,
+      0.7,
+      0.2,
+      0.2,
+      0.2,
+      0.7,
+      2,
+      8.1,
+      24,
+      170
+    ]
+  },
+  "caseRtp": 0.9,
+  "cases": [
+    {
+      "id": "free24",
+      "n": "Free 24h",
+      "price": 0,
+      "cd": 86400,
+      "ev": 0.2,
+      "title": "FREE<em>24</em>",
+      "border": "gold",
+      "glow": "#f2a20f",
+      "fb": "calendar",
+      "items": [
+        "r_heart",
+        "r_bear",
+        "r_box",
+        "r_rose",
+        "r_cake",
+        "r_rocket",
+        "r_trophy",
+        "instantramen",
+        "lolpop",
+        "ton001"
+      ],
+      "manual": true,
+      "w": {
+        "r_heart": 10.92,
+        "r_bear": 10.92,
+        "r_box": 7.9,
+        "r_rose": 7.9,
+        "r_cake": 5.09,
+        "r_rocket": 5.09,
+        "r_trophy": 3.28,
+        "instantramen": 0.91,
+        "lolpop": 0.91,
+        "ton001": 60
+      }
+    },
+    {
+      "id": "promo",
+      "n": "Промокод",
+      "price": 0,
+      "ev": 0.12,
+      "title": "PROMO",
+      "cls": "t-free",
+      "border": "vio",
+      "glow": "#16a88a",
+      "fb": "giftbox",
+      "items": [
+        "r_heart",
+        "r_bear",
+        "r_rose",
+        "r_box",
+        "r_champagne",
+        "deskcalendar",
+        "ton001"
+      ],
+      "manual": true,
+      "w": {
+        "r_heart": 11.68,
+        "r_bear": 11.68,
+        "r_rose": 8.31,
+        "r_box": 8.31,
+        "r_champagne": 5.24,
+        "deskcalendar": 0.77,
+        "ton001": 85
+      },
+      "promo": true
+    },
+    {
+      "id": "farm",
+      "n": "Farm",
+      "price": 0.25,
+      "title": "FARM",
+      "cls": "t-farm",
+      "border": "green",
+      "glow": "#7b3dff",
+      "btn": "g",
+      "fb": "plum",
+      "items": [
+        "r_heart",
+        "r_bear",
+        "r_box",
+        "r_rose",
+        "r_cake",
+        "r_gem",
+        "lolpop"
+      ]
+    },
+    {
+      "id": "winter",
+      "n": "Winter",
+      "price": 6.5,
+      "glow": "#3fa7ff",
+      "fb": "star",
+      "items": [
+        "candycane",
+        "xmasstocking",
+        "gingercookie",
+        "spicedwine",
+        "santahat",
+        "jinglebells",
+        "winterwreath",
+        "snowmittens",
+        "snowglobe",
+        "sleighbell"
+      ]
+    },
+    {
+      "id": "halloween",
+      "n": "Halloween",
+      "price": 7,
+      "badge": "lim",
+      "glow": "#ff6a1a",
+      "fb": "mushroom",
+      "items": [
+        "witchhat",
+        "hexpot",
+        "spyagaric",
+        "skullflower",
+        "crystalball",
+        "flyingbroom",
+        "madpumpkin",
+        "voodoodoll"
+      ]
+    },
+    {
+      "id": "love",
+      "n": "Love",
+      "price": 8,
+      "glow": "#ff3d8b",
+      "fb": "heart",
+      "items": [
+        "r_rose",
+        "cookieheart",
+        "valentinebox",
+        "lovecandle",
+        "cupidcharm",
+        "lovepotion",
+        "trappedheart",
+        "eternalrose",
+        "bondedring",
+        "heartlocket"
+      ]
+    },
+    {
+      "id": "space",
+      "n": "Space",
+      "price": 9,
+      "badge": "new",
+      "glow": "#4d6bff",
+      "fb": "rocket",
+      "items": [
+        "stellarrocket",
+        "starnotepad",
+        "moonpendant",
+        "hangingstar",
+        "crystalball",
+        "iongem",
+        "astralshard"
+      ]
+    },
+    {
+      "id": "westside",
+      "n": "Westside",
+      "price": 10,
+      "glow": "#22c55e",
+      "fb": "moneybag",
+      "items": [
+        "snoopdogg",
+        "swagbag",
+        "snoopcigar",
+        "lowrider",
+        "westsidesign"
+      ]
+    },
+    {
+      "id": "goldrush",
+      "n": "Gold Rush",
+      "price": 19,
+      "badge": "new",
+      "glow": "#f2b31a",
+      "fb": "ring",
+      "items": [
+        "moneypot",
+        "diamondring",
+        "signetring",
+        "swisswatch",
+        "bondedring",
+        "gemsignet",
+        "nailbracelet"
+      ]
+    },
+    {
+      "id": "champions",
+      "n": "Champions",
+      "price": 25,
+      "glow": "#e0304a",
+      "fb": "crown",
+      "items": [
+        "victorymedal",
+        "ufcstrike",
+        "khabibspapakha",
+        "mightyarm",
+        "heroichelmet"
+      ]
+    },
+    {
+      "id": "durov",
+      "n": "Durov",
+      "price": 49,
+      "glow": "#2e9cf2",
+      "fb": "star",
+      "items": [
+        "toybear",
+        "vintagecigar",
+        "signetring",
+        "swisswatch",
+        "lootbag",
+        "minioscar",
+        "durovsglasses",
+        "durovscap"
+      ]
+    },
+    {
+      "id": "legend",
+      "n": "Legend",
+      "price": 75,
+      "glow": "#9a4dff",
+      "fb": "crown",
+      "items": [
+        "nekohelmet",
+        "kissedfrog",
+        "scaredcat",
+        "iongem",
+        "astralshard",
+        "preciouspeach",
+        "durovscap",
+        "heartlocket",
+        "plushpepe"
+      ]
+    }
+  ],
+  "owner": "твой_username",
+  "autoPrices": true,
+  "prices": {},
+  "grants": [],
+  "bans": [],
+  "admins": [],
+  "updated": "",
+  "promos": []
+}
