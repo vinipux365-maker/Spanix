@@ -3283,12 +3283,10 @@ def main_menu(user_id=None):
     ]
     game_label = localized_menu_label("game", language)
     app_url = (setting("mini_app_url") or MINI_APP_URL).strip()
-    # Telegram Web Apps require a public HTTPS URL. Until one is configured,
-    # keep the button visible but don't create a broken WebAppInfo object.
-    if app_url.startswith("https://"):
-        rows.append([KeyboardButton(text=game_label, icon_custom_emoji_id=menu_emoji("game"), style=menu_style("game"), web_app=WebAppInfo(url=app_url))])
-    else:
-        rows.append([reply_button(game_label, emoji_id=menu_emoji("game"), style=menu_style("game"))])
+    # Plain text button: Mini Apps opened from a reply-keyboard web_app button
+    # get no user data from Telegram (no ID -> no admin, referrals, profile).
+    # The handler answers with an inline web_app button, which does pass it.
+    rows.append([reply_button(game_label, emoji_id=menu_emoji("game"), style=menu_style("game"))])
     return ReplyKeyboardMarkup(keyboard=rows, resize_keyboard=True)
 
 
@@ -9584,6 +9582,25 @@ async def fallback(message: Message, state: FSMContext):
             app_url = (setting("mini_app_url") or MINI_APP_URL).strip()
             if not app_url.startswith("https://"):
                 await message.answer("🎮 Щоб увімкнути SPANIX Games, додайте публічне HTTPS-посилання в MINI_APP_URL та перезапустіть бота.", reply_markup=main_menu(message.from_user.id))
+                return
+            language = user_language(message.from_user.id)
+            texts = {
+                "uk": ("🎮 <b>SPANIX Games</b>\n\nНатисніть кнопку нижче, щоб відкрити гру.", "Відкрити SPANIX Games"),
+                "ru": ("🎮 <b>SPANIX Games</b>\n\nНажмите кнопку ниже, чтобы открыть игру.", "Открыть SPANIX Games"),
+                "en": ("🎮 <b>SPANIX Games</b>\n\nTap the button below to open the game.", "Open SPANIX Games"),
+            }
+            text, button_text = texts.get(language, texts["uk"])
+            button_kwargs = {"text": button_text, "web_app": WebAppInfo(url=app_url)}
+            game_emoji = menu_emoji("game")
+            if game_emoji:
+                button_kwargs["icon_custom_emoji_id"] = str(game_emoji)
+            game_style = menu_style("game")
+            if game_style and game_style != "transparent":
+                button_kwargs["style"] = game_style
+            await message.answer(
+                text,
+                reply_markup=InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(**button_kwargs)]]),
+            )
             return
         if handler:
             if dynamic_key in {"buy_ton", "withdraw", "calculator", "support"}:
