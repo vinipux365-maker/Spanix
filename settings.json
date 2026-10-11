@@ -332,7 +332,9 @@
   "prices": {},
   "grants": [],
   "bans": [],
-  "admins": [],
+  "admins": [
+    6031180988
+  ],
   "updated": "",
   "promos": []
 }
