@@ -1,6 +1,10 @@
-.env
+# Никогда не заливать на GitHub: токен бота, платежи, локальные данные
+config.json
+payments.json
+.env*
 *.env
 !.env.example
+!bot/.env.example
 __pycache__/
 *.pyc
 *.db

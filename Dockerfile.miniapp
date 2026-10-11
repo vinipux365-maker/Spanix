@@ -1,0 +1,4 @@
+FROM caddy:2-alpine
+COPY Caddyfile /etc/caddy/Caddyfile
+COPY index.html deposit.html settings.json prices.json tonconnect-manifest.json icon.png /srv/
+COPY gifts/ /srv/gifts/
