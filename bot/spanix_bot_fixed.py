@@ -9617,6 +9617,8 @@ async def main():
     if not BOT_TOKEN:
         raise RuntimeError("Не задано BOT_TOKEN у Replit Secrets.")
     print(f"SQLite database: {DB_PATH}")
+    me = await bot.get_me()
+    print(f"Bot started: @{me.username} (id {me.id})", flush=True)
     if not ADMIN_IDS:
         print("ADMIN_IDS не задано: надішліть боту /id, додайте ID в ADMIN_IDS і перезапустіть бота.")
     await configure_bot_commands()
