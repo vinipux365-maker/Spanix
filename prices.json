@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-17T20:38:16Z",
+ "updated": "2026-10-17T23:09:24Z",
  "source": "fragment.com — самая дешёвая цена продажи",
  "prices": {
   "heartlocket": 1444,
@@ -30,7 +30,7 @@
   "toybear": 35,
   "signetring": 34,
   "kissedfrog": 55,
-  "sharptongue": 50,
+  "sharptongue": 53,
   "electricskull": 29,
   "nekohelmet": 40,
   "vintagecigar": 42,
@@ -65,8 +65,8 @@
   "prettyposy": 6,
   "snowglobe": 7,
   "lunarsnake": 5,
-  "jackinthebox": 5,
-  "eternalcandle": 6,
+  "jackinthebox": 6,
+  "eternalcandle": 7,
   "bunnymuffin": 9,
   "spyagaric": 8,
   "bowtie": 6,
@@ -81,7 +81,7 @@
   "stellarrocket": 6,
   "jollychimp": 7,
   "cookieheart": 6,
-  "chillflame": 5,
+  "chillflame": 4,
   "hypnolollipop": 5,
   "witchhat": 8,
   "gingercookie": 6,
@@ -105,7 +105,7 @@
   "swagbag": 6,
   "faithamulet": 7,
   "candycane": 5,
-  "vicecream": 5,
+  "vicecream": 4,
   "bdaycandle": 5,
   "deskcalendar": 7,
   "lolpop": 5,
@@ -117,7 +117,7 @@
   "snoopdogg": 6,
   "cloverpin": 6,
   "instantramen": 5,
-  "happybrownie": 5,
+  "happybrownie": 4,
   "icecream": 5
  }
 }
