@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-21T04:49:34Z",
+ "updated": "2026-10-21T11:51:17Z",
  "source": "fragment.com — самая дешёвая цена продажи",
  "prices": {
   "heartlocket": 1444,
@@ -37,7 +37,7 @@
   "eternalrose": 28,
   "voodoodoll": 40,
   "ionicdryer": 16,
-  "diamondring": 34,
+  "diamondring": 35,
   "rarebird": 30,
   "lovepotion": 16,
   "trappedheart": 18,
@@ -61,7 +61,7 @@
   "berrybox": 10,
   "sleighbell": 9,
   "inputkey": 7,
-  "snoopcigar": 16,
+  "snoopcigar": 17,
   "prettyposy": 6,
   "snowglobe": 7,
   "lunarsnake": 5,
@@ -118,6 +118,6 @@
   "cloverpin": 6,
   "instantramen": 5,
   "happybrownie": 5,
-  "icecream": 4
+  "icecream": 5
  }
 }
