@@ -1,9 +1,9 @@
 {
- "updated": "2026-11-07T19:27:01Z",
+ "updated": "2026-11-08T00:38:00Z",
  "source": "fragment.com — самая дешёвая цена продажи",
  "prices": {
   "heartlocket": 1700,
-  "heroichelmet": 231,
+  "heroichelmet": 250,
   "durovsglasses": 148,
   "plushpepe": 8000,
   "preciouspeach": 290,
@@ -70,7 +70,7 @@
   "bunnymuffin": 9,
   "spyagaric": 7,
   "bowtie": 7,
-  "evileye": 12,
+  "evileye": 13,
   "snowmittens": 10,
   "starnotepad": 6,
   "jellybunny": 10,
@@ -83,7 +83,7 @@
   "cookieheart": 6,
   "chillflame": 5,
   "hypnolollipop": 6,
-  "witchhat": 9,
+  "witchhat": 8,
   "gingercookie": 6,
   "spicedwine": 6,
   "santahat": 8,
@@ -99,7 +99,7 @@
   "snakebox": 5,
   "lightsword": 7,
   "holidaydrink": 6,
-  "freshsocks": 6,
+  "freshsocks": 5,
   "moneypot": 6,
   "moussecake": 6,
   "swagbag": 6,
@@ -117,7 +117,7 @@
   "snoopdogg": 7,
   "cloverpin": 6,
   "instantramen": 5,
-  "happybrownie": 5,
+  "happybrownie": 6,
   "icecream": 5
  }
 }
